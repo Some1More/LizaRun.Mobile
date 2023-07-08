@@ -10,27 +10,27 @@ import com.example.lizarun.domain.model.param.LoginUserParam
 import com.example.lizarun.domain.model.param.RegisterUserParam
 import com.example.lizarun.domain.model.param.UpdateSportsmanDataParam
 import com.example.lizarun.domain.model.param.UpdateUserDataParam
-import com.example.lizarun.domain.model.ApiResult
-import kotlinx.coroutines.flow.Flow
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 
 interface UserRepository {
-    suspend fun getUserById(param: GetUserByIdParam): Flow<ApiResult<User>>
+    fun getUserById(param: GetUserByIdParam): Single<User>
 
-    suspend fun getAccessToken(param: GetAccessTokenParam): Flow<ApiResult<AuthData>>
+    fun getAccessToken(param: GetAccessTokenParam): Single<AuthData>
 
-    suspend fun registerUser(param: RegisterUserParam): Flow<ApiResult<AuthData>>
+    fun registerUser(param: RegisterUserParam): Single<AuthData>
 
-    suspend fun loginUser(param: LoginUserParam): Flow<ApiResult<AuthData>>
+    fun loginUser(param: LoginUserParam): Single<AuthData>
 
-    suspend fun logoutUser(): Flow<ApiResult<Unit>>
+    fun logoutUser(): Completable
 
-    suspend fun updateUserData(param: UpdateUserDataParam): Flow<ApiResult<Unit>>
+    fun updateUserData(param: UpdateUserDataParam): Completable
 
-    suspend fun fillSportsmanData(param: FillSportsmanDataParam): Flow<ApiResult<Unit>>
+    fun fillSportsmanData(param: FillSportsmanDataParam): Completable
 
-    suspend fun updateSportsmanData(param: UpdateSportsmanDataParam): Flow<ApiResult<Unit>>
+    fun updateSportsmanData(param: UpdateSportsmanDataParam): Completable
 
-    suspend fun changeUserPassword(param: ChangeUserPasswordParam): Flow<ApiResult<Unit>>
+    fun changeUserPassword(param: ChangeUserPasswordParam): Completable
 
-    suspend fun resetUserPassword(): Flow<ApiResult<Unit>>
+    fun resetUserPassword(): Completable
 }

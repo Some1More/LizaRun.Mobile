@@ -4,6 +4,6 @@ import com.example.lizarun.domain.model.param.GetExercisesByFiltersParam
 import com.example.lizarun.domain.repository.ExerciseRepository
 
 class GetExercisesByFiltersUseCase(private val exerciseRepository: ExerciseRepository) {
-    suspend operator fun invoke(getExercisesByFiltersParam: GetExercisesByFiltersParam) =
+    operator fun invoke(getExercisesByFiltersParam: GetExercisesByFiltersParam) =
         exerciseRepository.getExercisesByFilters(param = getExercisesByFiltersParam)
 }

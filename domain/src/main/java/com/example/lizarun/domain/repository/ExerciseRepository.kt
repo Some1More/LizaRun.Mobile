@@ -8,21 +8,21 @@ import com.example.lizarun.domain.model.param.GetExerciseByIdParam
 import com.example.lizarun.domain.model.param.GetExerciseByNameParam
 import com.example.lizarun.domain.model.param.GetExercisesByFiltersParam
 import com.example.lizarun.domain.model.param.UpdateExerciseParam
-import com.example.lizarun.domain.model.ApiResult
-import kotlinx.coroutines.flow.Flow
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 
 interface ExerciseRepository {
-    suspend fun getAllExercises(): Flow<ApiResult<List<ExerciseInList>>>
+    fun getAllExercises(): Single<List<ExerciseInList>>
 
-    suspend fun getExercisesByFilters(param: GetExercisesByFiltersParam): Flow<ApiResult<List<ExerciseInList>>>
+    fun getExercisesByFilters(param: GetExercisesByFiltersParam): Single<List<ExerciseInList>>
 
-    suspend fun getExerciseById(param: GetExerciseByIdParam): Flow<ApiResult<Exercise>>
+    fun getExerciseById(param: GetExerciseByIdParam): Single<Exercise>
 
-    suspend fun getExerciseByName(param: GetExerciseByNameParam): Flow<ApiResult<Exercise>>
+    fun getExerciseByName(param: GetExerciseByNameParam): Single<Exercise>
 
-    suspend fun createExercise(param: CreateExerciseParam): Flow<ApiResult<Exercise>>
+    fun createExercise(param: CreateExerciseParam): Single<Exercise>
 
-    suspend fun updateExercise(param: UpdateExerciseParam): Flow<ApiResult<Unit>>
+    fun updateExercise(param: UpdateExerciseParam): Completable
 
-    suspend fun deleteExercise(param: DeleteExerciseParam): Flow<ApiResult<Unit>>
+    fun deleteExercise(param: DeleteExerciseParam): Completable
 }

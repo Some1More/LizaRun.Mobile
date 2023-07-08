@@ -4,6 +4,6 @@ import com.example.lizarun.domain.model.param.DeleteExerciseParam
 import com.example.lizarun.domain.repository.ExerciseRepository
 
 class DeleteExerciseUseCase(private val exerciseRepository: ExerciseRepository) {
-    suspend operator fun invoke(deleteExerciseParam: DeleteExerciseParam) =
+    operator fun invoke(deleteExerciseParam: DeleteExerciseParam) =
         exerciseRepository.deleteExercise(param = deleteExerciseParam)
 }

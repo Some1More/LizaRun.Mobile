@@ -4,6 +4,6 @@ import com.example.lizarun.domain.model.param.RegisterUserParam
 import com.example.lizarun.domain.repository.UserRepository
 
 class RegisterUserUseCase(private val userRepository: UserRepository) {
-    suspend operator fun invoke(registerUserParam: RegisterUserParam) =
+    operator fun invoke(registerUserParam: RegisterUserParam) =
         userRepository.registerUser(param = registerUserParam)
 }

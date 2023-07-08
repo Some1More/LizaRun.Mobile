@@ -1,6 +1,5 @@
 package com.example.lizarun.data.repository
 
-import com.example.lizarun.data.mapper.map
 import com.example.lizarun.data.mapper.mapToDomain
 import com.example.lizarun.data.mapper.mapToStorage
 import com.example.lizarun.data.storage.UserRemoteDataSource
@@ -14,94 +13,75 @@ import com.example.lizarun.domain.model.param.LoginUserParam
 import com.example.lizarun.domain.model.param.RegisterUserParam
 import com.example.lizarun.domain.model.param.UpdateSportsmanDataParam
 import com.example.lizarun.domain.model.param.UpdateUserDataParam
-import com.example.lizarun.domain.model.ApiResult
 import com.example.lizarun.domain.repository.UserRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class UserRepositoryImpl(private val userRemoteDataSource: UserRemoteDataSource) : UserRepository {
-    override suspend fun getUserById(param: GetUserByIdParam): Flow<ApiResult<User>> {
+    override fun getUserById(param: GetUserByIdParam): Single<User> {
         val request = param.mapToStorage()
-        return userRemoteDataSource.getById(getUserByIdRequest = request).map { result ->
-            result.map {
-                it.mapToDomain()
-            }
+        return userRemoteDataSource.getById(getUserByIdRequest = request).map {
+            it.mapToDomain()
         }
     }
 
-    override suspend fun getAccessToken(param: GetAccessTokenParam): Flow<ApiResult<AuthData>> {
+    override fun getAccessToken(param: GetAccessTokenParam): Single<AuthData> {
         val request = param.mapToStorage()
-        return userRemoteDataSource.getToken(getAccessTokenRequest = request).map { result ->
-            result.map {
-                it.mapToDomain()
-            }
+        return userRemoteDataSource.getToken(getAccessTokenRequest = request).map {
+            it.mapToDomain()
         }
     }
 
-    override suspend fun registerUser(param: RegisterUserParam): Flow<ApiResult<AuthData>> {
+    override fun registerUser(param: RegisterUserParam): Single<AuthData> {
         val request = param.mapToStorage()
-        return userRemoteDataSource.register(registerUserRequest = request).map { result ->
-            result.map {
-                it.mapToDomain()
-            }
-        }
+        return userRemoteDataSource.register(registerUserRequest = request).map {
+            it.mapToDomain()
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
-    override suspend fun loginUser(param: LoginUserParam): Flow<ApiResult<AuthData>> {
+    override fun loginUser(param: LoginUserParam): Single<AuthData> {
         val request = param.mapToStorage()
-        return userRemoteDataSource.login(loginUserRequest = request).map { result ->
-            result.map {
-                it.mapToDomain()
-            }
+        return userRemoteDataSource.login(loginUserRequest = request).map {
+            it.mapToDomain()
         }
     }
 
-    override suspend fun logoutUser(): Flow<ApiResult<Unit>> {
-        return userRemoteDataSource.logout().map { result ->
-            result.map()
-        }
+    override fun logoutUser(): Completable {
+        return userRemoteDataSource.logout()
     }
 
-    override suspend fun updateUserData(param: UpdateUserDataParam): Flow<ApiResult<Unit>> {
+    override fun updateUserData(param: UpdateUserDataParam): Completable {
         val request = param.mapToStorage()
         return userRemoteDataSource.update(
             userId = param.userId,
             updateUserDataRequest = request
-        ).map { result ->
-            result.map()
-        }
+        )
     }
 
-    override suspend fun fillSportsmanData(param: FillSportsmanDataParam): Flow<ApiResult<Unit>> {
+    override fun fillSportsmanData(param: FillSportsmanDataParam): Completable {
         val request = param.mapToStorage()
         return userRemoteDataSource.fillSportsman(
             sportsmanId = param.sportsmanId,
             fillSportsmanDataRequest = request
-        ).map { result ->
-            result.map()
-        }
+        )
     }
 
-    override suspend fun updateSportsmanData(param: UpdateSportsmanDataParam): Flow<ApiResult<Unit>> {
+    override fun updateSportsmanData(param: UpdateSportsmanDataParam): Completable {
         val request = param.mapToStorage()
         return userRemoteDataSource.updateSportsman(
             sportsmanId = param.sportsmanId,
             updateSportsmanDataRequest = request
-        ).map { result ->
-            result.map()
-        }
+        )
     }
 
-    override suspend fun changeUserPassword(param: ChangeUserPasswordParam): Flow<ApiResult<Unit>> {
+    override fun changeUserPassword(param: ChangeUserPasswordParam): Completable {
         val request = param.mapToStorage()
-        return userRemoteDataSource.changePassword(changeUserPasswordRequest = request).map { result ->
-            result.map()
-        }
+        return userRemoteDataSource.changePassword(changeUserPasswordRequest = request)
     }
 
-    override suspend fun resetUserPassword(): Flow<ApiResult<Unit>> {
-        return userRemoteDataSource.resetPassword().map { result ->
-            result.map()
-        }
+    override fun resetUserPassword(): Completable {
+        return userRemoteDataSource.resetPassword()
     }
 }

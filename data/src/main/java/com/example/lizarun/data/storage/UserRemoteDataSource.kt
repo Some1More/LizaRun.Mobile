@@ -1,7 +1,6 @@
 package com.example.lizarun.data.storage
 
 import android.content.Context
-import com.example.lizarun.data.storage.base.BaseRemoteDataSource
 import com.example.lizarun.data.storage.model.request.ChangeUserPasswordRequest
 import com.example.lizarun.data.storage.model.request.FillSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.GetAccessTokenRequest
@@ -10,54 +9,57 @@ import com.example.lizarun.data.storage.model.request.LoginUserRequest
 import com.example.lizarun.data.storage.model.request.RegisterUserRequest
 import com.example.lizarun.data.storage.model.request.UpdateSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.UpdateUserDataRequest
+import com.example.lizarun.data.storage.retrofit.LizaRunApiClient
 
-class UserRemoteDataSource(context: Context) : BaseRemoteDataSource(context) {
-    suspend fun getById(getUserByIdRequest: GetUserByIdRequest) = apiRequestFlow {
+class UserRemoteDataSource(context: Context) {
+    private val apiService = LizaRunApiClient.getApiService(TokenLocalDataSource(context))
+
+    fun getById(getUserByIdRequest: GetUserByIdRequest) = rxJavaSingleCall {
         apiService.getUserById(id = getUserByIdRequest.id)
     }
 
-    suspend fun getToken(getAccessTokenRequest: GetAccessTokenRequest) = apiRequestFlow {
+    fun getToken(getAccessTokenRequest: GetAccessTokenRequest) = rxJavaSingleCall {
         apiService.getAccessToken(requestBody = getAccessTokenRequest)
     }
 
-    suspend fun register(registerUserRequest: RegisterUserRequest) = apiRequestFlow {
+    fun register(registerUserRequest: RegisterUserRequest) = rxJavaSingleCall {
         apiService.registerUser(requestBody = registerUserRequest)
     }
 
-    suspend fun login(loginUserRequest: LoginUserRequest) = apiRequestFlow {
+    fun login(loginUserRequest: LoginUserRequest) = rxJavaSingleCall {
         apiService.loginUser(requestBody = loginUserRequest)
     }
 
-    suspend fun logout() = apiRequestFlow {
+    fun logout() = rxJavaCompletableCall {
         apiService.logoutUser()
     }
 
-    suspend fun update(
+    fun update(
         userId: String,
         updateUserDataRequest: UpdateUserDataRequest
-    ) = apiRequestFlow {
+    ) = rxJavaCompletableCall {
         apiService.updateUserData(id = userId, requestBody = updateUserDataRequest)
     }
 
-    suspend fun fillSportsman(
+    fun fillSportsman(
         sportsmanId: String,
         fillSportsmanDataRequest: FillSportsmanDataRequest
-    ) = apiRequestFlow {
+    ) = rxJavaCompletableCall {
         apiService.fillSportsmanData(id = sportsmanId, requestBody = fillSportsmanDataRequest)
     }
 
-    suspend fun updateSportsman(
+    fun updateSportsman(
         sportsmanId: String,
         updateSportsmanDataRequest: UpdateSportsmanDataRequest
-    ) = apiRequestFlow {
+    ) = rxJavaCompletableCall {
         apiService.updateSportsmanData(id = sportsmanId, requestBody = updateSportsmanDataRequest)
     }
 
-    suspend fun changePassword(changeUserPasswordRequest: ChangeUserPasswordRequest) = apiRequestFlow {
+    fun changePassword(changeUserPasswordRequest: ChangeUserPasswordRequest) = rxJavaCompletableCall {
         apiService.changeUserPassword(requestBody = changeUserPasswordRequest)
     }
 
-    suspend fun resetPassword() = apiRequestFlow {
+    fun resetPassword() = rxJavaCompletableCall {
         apiService.resetUserPassword()
     }
 }
