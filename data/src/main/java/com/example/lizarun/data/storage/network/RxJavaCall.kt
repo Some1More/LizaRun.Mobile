@@ -1,4 +1,4 @@
-package com.example.lizarun.data.storage
+package com.example.lizarun.data.storage.network
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable

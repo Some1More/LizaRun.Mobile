@@ -9,7 +9,9 @@ import com.example.lizarun.data.storage.model.request.LoginUserRequest
 import com.example.lizarun.data.storage.model.request.RegisterUserRequest
 import com.example.lizarun.data.storage.model.request.UpdateSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.UpdateUserDataRequest
-import com.example.lizarun.data.storage.retrofit.LizaRunApiClient
+import com.example.lizarun.data.storage.network.LizaRunApiClient
+import com.example.lizarun.data.storage.network.rxJavaCompletableCall
+import com.example.lizarun.data.storage.network.rxJavaSingleCall
 
 class UserRemoteDataSource(context: Context) {
     private val apiService = LizaRunApiClient.getApiService(TokenLocalDataSource(context))

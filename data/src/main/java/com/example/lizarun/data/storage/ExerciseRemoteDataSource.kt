@@ -7,7 +7,9 @@ import com.example.lizarun.data.storage.model.request.GetExerciseByIdRequest
 import com.example.lizarun.data.storage.model.request.GetExerciseByNameRequest
 import com.example.lizarun.data.storage.model.request.GetExercisesByFiltersRequest
 import com.example.lizarun.data.storage.model.request.UpdateExerciseRequest
-import com.example.lizarun.data.storage.retrofit.LizaRunApiClient
+import com.example.lizarun.data.storage.network.LizaRunApiClient
+import com.example.lizarun.data.storage.network.rxJavaCompletableCall
+import com.example.lizarun.data.storage.network.rxJavaSingleCall
 
 class ExerciseRemoteDataSource(context: Context) {
     private val apiService = LizaRunApiClient.getApiService(TokenLocalDataSource(context))

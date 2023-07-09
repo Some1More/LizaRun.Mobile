@@ -1,4 +1,4 @@
-package com.example.lizarun.data.storage.retrofit
+package com.example.lizarun.data.storage.network
 
 import com.example.lizarun.data.storage.TokenLocalDataSource
 import kotlinx.coroutines.flow.first
