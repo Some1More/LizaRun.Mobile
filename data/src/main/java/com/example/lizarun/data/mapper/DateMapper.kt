@@ -1,10 +1,10 @@
 package com.example.lizarun.data.mapper
 
 import com.example.lizarun.data.storage.model.request.BirthDateRequest
-import com.example.lizarun.data.storage.model.response.BirthDateResponse
+import com.example.lizarun.data.storage.model.response.DateResponse
 import com.example.lizarun.domain.model.entity.BirthDate
 
-fun BirthDateResponse.mapToDomain(): BirthDate {
+fun DateResponse.mapToDomain(): BirthDate {
     return BirthDate(
         year = year,
         month = month,

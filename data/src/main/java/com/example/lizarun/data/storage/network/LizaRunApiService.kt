@@ -3,35 +3,40 @@ package com.example.lizarun.data.storage.network
 import com.example.lizarun.data.storage.model.request.ChangeUserPasswordRequest
 import com.example.lizarun.data.storage.model.request.CreateExerciseRequest
 import com.example.lizarun.data.storage.model.request.CreateTrainingComplexRequest
+import com.example.lizarun.data.storage.model.request.CreateWorkoutRequest
 import com.example.lizarun.data.storage.model.request.FillSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.GetAccessTokenRequest
 import com.example.lizarun.data.storage.model.request.GetExercisesByFiltersRequest
+import com.example.lizarun.data.storage.model.request.GetWorkoutByDateRequest
 import com.example.lizarun.data.storage.model.request.LoginUserRequest
 import com.example.lizarun.data.storage.model.request.RegisterUserRequest
 import com.example.lizarun.data.storage.model.request.UpdateExerciseRequest
 import com.example.lizarun.data.storage.model.request.UpdateSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.UpdateTrainingComplexRequest
 import com.example.lizarun.data.storage.model.request.UpdateUserDataRequest
+import com.example.lizarun.data.storage.model.request.UpdateWorkoutForSportsmanRequest
+import com.example.lizarun.data.storage.model.request.UpdateWorkoutForTrainerRequest
 import com.example.lizarun.data.storage.model.response.AuthDataResponse
 import com.example.lizarun.data.storage.model.response.ExerciseInListResponse
 import com.example.lizarun.data.storage.model.response.ExerciseResponse
 import com.example.lizarun.data.storage.model.response.TrainingComplexResponse
 import com.example.lizarun.data.storage.model.response.UserResponse
+import com.example.lizarun.data.storage.model.response.WorkoutInListResponse
+import com.example.lizarun.data.storage.model.response.WorkoutResponse
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface LizaRunApiService {
-
     /**
      * Exercise Requests
      */
-
     @GET("/api/Exercise/GetAll")
     fun getAllExercises(): Single<List<ExerciseInListResponse>>
 
@@ -56,7 +61,6 @@ interface LizaRunApiService {
     /**
      * Training Complex Requests
      */
-
     @GET("/api/TrainingComplex/GetAll")
     fun getAllTrainingComplexes(): Single<List<TrainingComplexResponse>>
 
@@ -67,7 +71,10 @@ interface LizaRunApiService {
     fun createTrainingComplex(@Body requestBody: CreateTrainingComplexRequest): Single<TrainingComplexResponse>
 
     @PATCH("/api/TrainingComplex/Update/{id}")
-    fun updateTrainingComplex(@Path("id") id: String, @Body requestBody: UpdateTrainingComplexRequest): Completable
+    fun updateTrainingComplex(
+        @Path("id") id: String,
+        @Body requestBody: UpdateTrainingComplexRequest
+    ): Completable
 
     @DELETE("/api/TrainingComplex/Delete/{id}")
     fun deleteTrainingComplex(@Path("id") id: String): Completable
@@ -75,7 +82,6 @@ interface LizaRunApiService {
     /**
      * User Requests
      */
-
     @GET("/api/LizaRun/User/GetById/{userId}")
     fun getUserById(@Path("userId") id: String): Single<UserResponse>
 
@@ -114,4 +120,49 @@ interface LizaRunApiService {
 
     @PATCH("/api/LizaRun/User/PasswordReset")
     fun resetUserPassword(): Completable
+
+    /**
+     * Workout Requests
+     */
+    @GET("/api/Workout/GetByDate")
+    fun getWorkoutByDate(@Body requestBody: GetWorkoutByDateRequest): Single<List<WorkoutInListResponse>>
+
+    @GET("/api/Workout/GetById/{id}")
+    fun getWorkoutById(@Path("id") id: String): Single<WorkoutResponse>
+
+    @POST("/api/Workout/Create")
+    fun createWorkout(@Body requestBody: CreateWorkoutRequest): Single<WorkoutInListResponse>
+
+    @PATCH("/api/Workout/WriteComments/{id}")
+    fun writeCommentsToWorkout(
+        @Path("id") id: String,
+        @Field("comments") comments: String
+    ): Completable
+
+    @PATCH("/api/Workout/WriteRecomendations/{id}")
+    fun writeRecommendationsToWorkout(
+        @Path("id") id: String,
+        @Field("recomendations") recommendations: String
+    ): Completable
+
+    @PATCH("/api/Workout/UpdateForTrainer/{id}")
+    fun updateWorkoutForTrainer(
+        @Path("id") id: String,
+        @Body requestBody: UpdateWorkoutForTrainerRequest
+    ): Completable
+
+    @PATCH("/api/Workout/UpdateForSportsman/{id}")
+    fun updateWorkoutForSportsman(
+        @Path("id") id: String,
+        @Body requestBody: UpdateWorkoutForSportsmanRequest
+    ): Completable
+
+    @PATCH("/api/Workout/ChangeExecutionStatus/{id}")
+    fun changeWorkoutExecutionStatus(
+        @Path("id") id: String,
+        @Field("executeStatus") executeStatus: Int
+    ): Completable
+
+    @DELETE("/api/Workout/Delete/{id}")
+    fun deleteWorkout(@Path("id") id: String): Completable
 }

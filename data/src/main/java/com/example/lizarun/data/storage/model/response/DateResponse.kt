@@ -1,6 +1,6 @@
 package com.example.lizarun.data.storage.model.response
 
-data class BirthDateResponse(
+data class DateResponse(
     val year: Int,
     val month: Int,
     val day: Int,

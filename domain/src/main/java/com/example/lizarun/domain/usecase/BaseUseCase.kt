@@ -4,25 +4,26 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-interface BaseUseCase<T : Any> {
-    private val disposables: CompositeDisposable
-        get() = CompositeDisposable()
+abstract class BaseUseCase<T : Any> {
+    private val disposables = CompositeDisposable()
 
     fun dispose() {
         disposables.clear()
     }
 
-    fun Single<T>.executeUseCase(
+    fun getRxJavaResult(
+        singleResult: Single<T>,
         onSuccess: (T) -> Unit,
         onError: (Throwable) -> Unit
     ) {
-        disposables.addAll(subscribe(onSuccess, onError))
+        disposables.addAll(singleResult.subscribe(onSuccess, onError))
     }
 
-    fun Completable.executeUseCase(
+    fun getRxJavaResult(
+        completableResult: Completable,
         onComplete: () -> Unit,
         onError: (Throwable) -> Unit
     ) {
-        disposables.addAll(subscribe(onComplete, onError))
+        disposables.addAll(completableResult.subscribe(onComplete, onError))
     }
 }

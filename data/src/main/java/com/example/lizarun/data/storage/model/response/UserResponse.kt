@@ -7,7 +7,7 @@ data class UserResponse(
     val firstname: String,
     val middlename: String,
     val surname: String,
-    val birthDate: BirthDateResponse,
+    val birthDate: DateResponse,
     val telegramLink: String,
     val photo: String,
     val trainingComplexes: List<TrainingComplexResponse>
