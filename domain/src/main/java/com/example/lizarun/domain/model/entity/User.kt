@@ -7,7 +7,7 @@ data class User(
     val firstname: String,
     val middlename: String,
     val surname: String,
-    val birthDate: BirthDate,
+    val birthDate: Date,
     val telegramLink: String,
     val photo: String,
     val trainingComplexes: List<TrainingComplex>

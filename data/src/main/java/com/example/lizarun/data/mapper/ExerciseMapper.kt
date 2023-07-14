@@ -30,15 +30,19 @@ fun ExerciseResponse.mapToDomain(): Exercise {
     )
 }
 
+fun ExerciseInListResponse.mapToDomain(): ExerciseInList {
+    return ExerciseInList(
+        id = id,
+        name = name,
+        exerciseType = exerciseType,
+        muscularApparatus = muscularApparatus,
+        photo = photo
+    )
+}
+
 fun List<ExerciseInListResponse>.mapToDomain(): List<ExerciseInList> {
     return map {
-        ExerciseInList(
-            id = it.id,
-            name = it.name,
-            exerciseType = it.exerciseType,
-            muscularApparatus = it.muscularApparatus,
-            photo = it.photo
-        )
+        it.mapToDomain()
     }
 }
 

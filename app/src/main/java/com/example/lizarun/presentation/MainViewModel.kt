@@ -1,9 +1,10 @@
 package com.example.lizarun.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.lizarun.domain.model.entity.AuthData
+import com.example.lizarun.domain.model.entity.User
 import com.example.lizarun.domain.model.param.GetUserByIdParam
 import com.example.lizarun.domain.model.param.RegisterUserParam
 import com.example.lizarun.domain.usecase.GetUserByIdUseCase
@@ -16,8 +17,8 @@ class MainViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
     private val getUserByIdUseCase: GetUserByIdUseCase
 ) : ViewModel() {
-    private val _authData = MutableLiveData<AuthData>()
-    val authData: LiveData<AuthData> = _authData
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> = _user
 
     fun registerUser(
         email: String,
@@ -36,10 +37,10 @@ class MainViewModel @Inject constructor(
         getUserByIdUseCase.getRxJavaResult(
             result,
             onSuccess = {
-
+                _user.postValue(it)
             },
             onError = {
-
+                Log.d("info", "${it.message}")
             }
         )
     }
