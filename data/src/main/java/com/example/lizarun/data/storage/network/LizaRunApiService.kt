@@ -1,15 +1,18 @@
 package com.example.lizarun.data.storage.network
 
 import com.example.lizarun.data.storage.model.request.ChangeUserPasswordRequest
+import com.example.lizarun.data.storage.model.request.CreateCompetitionRequest
 import com.example.lizarun.data.storage.model.request.CreateExerciseRequest
 import com.example.lizarun.data.storage.model.request.CreateTrainingComplexRequest
 import com.example.lizarun.data.storage.model.request.CreateWorkoutRequest
 import com.example.lizarun.data.storage.model.request.FillSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.GetAccessTokenRequest
+import com.example.lizarun.data.storage.model.request.GetCompetitionByFiltersRequest
 import com.example.lizarun.data.storage.model.request.GetExercisesByFiltersRequest
 import com.example.lizarun.data.storage.model.request.GetWorkoutByDateRequest
 import com.example.lizarun.data.storage.model.request.LoginUserRequest
 import com.example.lizarun.data.storage.model.request.RegisterUserRequest
+import com.example.lizarun.data.storage.model.request.UpdateCompetitionRequest
 import com.example.lizarun.data.storage.model.request.UpdateExerciseRequest
 import com.example.lizarun.data.storage.model.request.UpdateSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.UpdateTrainingComplexRequest
@@ -17,6 +20,8 @@ import com.example.lizarun.data.storage.model.request.UpdateUserDataRequest
 import com.example.lizarun.data.storage.model.request.UpdateWorkoutForSportsmanRequest
 import com.example.lizarun.data.storage.model.request.UpdateWorkoutForTrainerRequest
 import com.example.lizarun.data.storage.model.response.AuthDataResponse
+import com.example.lizarun.data.storage.model.response.CompetitionInListResponse
+import com.example.lizarun.data.storage.model.response.CompetitionResponse
 import com.example.lizarun.data.storage.model.response.ExerciseInListResponse
 import com.example.lizarun.data.storage.model.response.ExerciseResponse
 import com.example.lizarun.data.storage.model.response.TrainingComplexResponse
@@ -34,6 +39,30 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface LizaRunApiService {
+    /**
+     * Competition Requests
+     */
+    @GET("/api/Competition/GetAll")
+    fun getAllCompetitions(): Single<List<CompetitionInListResponse>>
+
+    @GET("/api/Competition/GetByFilters")
+    fun getCompetitionByFilters(@Body requestBody: GetCompetitionByFiltersRequest): Single<List<CompetitionInListResponse>>
+
+    @GET("/api/Competition/GetById/{id}")
+    fun getCompetitionById(@Path("id") id: String): Single<CompetitionResponse>
+
+    @POST("/api/Competition/Create")
+    fun createCompetition(@Body requestBody: CreateCompetitionRequest): Single<CompetitionResponse>
+
+    @PATCH("/api/Competition/Update/{id}")
+    fun updateCompetition(
+        @Path("id") id: String,
+        @Body requestBody: UpdateCompetitionRequest
+    ): Completable
+
+    @DELETE("/api/Competition/Delete/{id}")
+    fun deleteCompetition(@Path("id") id: String): Completable
+
     /**
      * Exercise Requests
      */
