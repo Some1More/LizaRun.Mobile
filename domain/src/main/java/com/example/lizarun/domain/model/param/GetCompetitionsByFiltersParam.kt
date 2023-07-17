@@ -1,6 +1,6 @@
 package com.example.lizarun.domain.model.param
 
-data class GetCompetitionByFiltersParam(
+data class GetCompetitionsByFiltersParam(
     val distance: Int,
     val dateTime: String,
     val trackType: Int,

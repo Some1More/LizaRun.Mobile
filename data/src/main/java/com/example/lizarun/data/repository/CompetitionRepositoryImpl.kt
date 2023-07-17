@@ -7,7 +7,7 @@ import com.example.lizarun.domain.model.entity.Competition
 import com.example.lizarun.domain.model.entity.CompetitionInList
 import com.example.lizarun.domain.model.param.CreateCompetitionParam
 import com.example.lizarun.domain.model.param.DeleteCompetitionParam
-import com.example.lizarun.domain.model.param.GetCompetitionByFiltersParam
+import com.example.lizarun.domain.model.param.GetCompetitionsByFiltersParam
 import com.example.lizarun.domain.model.param.GetCompetitionByIdParam
 import com.example.lizarun.domain.model.param.UpdateCompetitionParam
 import com.example.lizarun.domain.repository.CompetitionRepository
@@ -21,9 +21,9 @@ class CompetitionRepositoryImpl(private val competitionRemoteDataSource: Competi
         }
     }
 
-    override fun getCompetitionByFilters(param: GetCompetitionByFiltersParam): Single<List<CompetitionInList>> {
+    override fun getCompetitionsByFilters(param: GetCompetitionsByFiltersParam): Single<List<CompetitionInList>> {
         val request = param.mapToStorage()
-        return competitionRemoteDataSource.getByFilters(getCompetitionByFiltersRequest = request).map {
+        return competitionRemoteDataSource.getByFilters(getCompetitionsByFiltersRequest = request).map {
             it.mapToDomain()
         }
     }

@@ -7,7 +7,8 @@ import com.example.lizarun.data.storage.model.request.CreateTrainingComplexReque
 import com.example.lizarun.data.storage.model.request.CreateWorkoutRequest
 import com.example.lizarun.data.storage.model.request.FillSportsmanDataRequest
 import com.example.lizarun.data.storage.model.request.GetAccessTokenRequest
-import com.example.lizarun.data.storage.model.request.GetCompetitionByFiltersRequest
+import com.example.lizarun.data.storage.model.request.GetCompetitionResultsByFiltersRequest
+import com.example.lizarun.data.storage.model.request.GetCompetitionsByFiltersRequest
 import com.example.lizarun.data.storage.model.request.GetExercisesByFiltersRequest
 import com.example.lizarun.data.storage.model.request.GetWorkoutByDateRequest
 import com.example.lizarun.data.storage.model.request.LoginUserRequest
@@ -22,6 +23,8 @@ import com.example.lizarun.data.storage.model.request.UpdateWorkoutForTrainerReq
 import com.example.lizarun.data.storage.model.response.AuthDataResponse
 import com.example.lizarun.data.storage.model.response.CompetitionInListResponse
 import com.example.lizarun.data.storage.model.response.CompetitionResponse
+import com.example.lizarun.data.storage.model.response.CompetitionResultInListResponse
+import com.example.lizarun.data.storage.model.response.CompetitionResultResponse
 import com.example.lizarun.data.storage.model.response.ExerciseInListResponse
 import com.example.lizarun.data.storage.model.response.ExerciseResponse
 import com.example.lizarun.data.storage.model.response.TrainingComplexResponse
@@ -46,7 +49,7 @@ interface LizaRunApiService {
     fun getAllCompetitions(): Single<List<CompetitionInListResponse>>
 
     @GET("/api/Competition/GetByFilters")
-    fun getCompetitionByFilters(@Body requestBody: GetCompetitionByFiltersRequest): Single<List<CompetitionInListResponse>>
+    fun getCompetitionsByFilters(@Body requestBody: GetCompetitionsByFiltersRequest): Single<List<CompetitionInListResponse>>
 
     @GET("/api/Competition/GetById/{id}")
     fun getCompetitionById(@Path("id") id: String): Single<CompetitionResponse>
@@ -62,6 +65,30 @@ interface LizaRunApiService {
 
     @DELETE("/api/Competition/Delete/{id}")
     fun deleteCompetition(@Path("id") id: String): Completable
+
+    /**
+     * CompetitionResult Requests
+     */
+    @GET("/api/CompetitionResult/GetResultsByCompetitionId/{competitionId}")
+    fun getCompetitionResultsByCompetitionId(@Path("competitionId") id: String): Single<List<CompetitionResultInListResponse>>
+
+    @GET("/api/CompetitionResult/GetResultsBySportsmanId/{sportsmanId}")
+    fun getCompetitionResultsBySportsmanId(@Path("sportsmanId") id: String): Single<List<CompetitionResultInListResponse>>
+
+    @GET("/api/CompetitionResult/GetByFilters")
+    fun getCompetitionResultsByFilters(@Body requestBody: GetCompetitionResultsByFiltersRequest): Single<List<CompetitionResultInListResponse>>
+
+    @GET("/api/CompetitionResult/GetById/{id}")
+    fun getCompetitionResultById(@Path("id") id: String): Single<CompetitionResultResponse>
+
+    @POST("/api/CompetitionResult/Create")
+    fun createCompetitionResult(): Single<CompetitionResultResponse>
+
+    @PATCH("/api/CompetitionResult/Update/{id}")
+    fun updateCompetitionResult(@Path("id") id: String): Completable
+
+    @DELETE("/api/CompetitionResult/Delete/{id}")
+    fun deleteCompetitionResult(@Path("id") id: String): Completable
 
     /**
      * Exercise Requests

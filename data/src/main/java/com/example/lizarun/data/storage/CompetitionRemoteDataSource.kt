@@ -3,7 +3,7 @@ package com.example.lizarun.data.storage
 import android.content.Context
 import com.example.lizarun.data.storage.model.request.CreateCompetitionRequest
 import com.example.lizarun.data.storage.model.request.DeleteCompetitionRequest
-import com.example.lizarun.data.storage.model.request.GetCompetitionByFiltersRequest
+import com.example.lizarun.data.storage.model.request.GetCompetitionsByFiltersRequest
 import com.example.lizarun.data.storage.model.request.GetCompetitionByIdRequest
 import com.example.lizarun.data.storage.model.request.UpdateCompetitionRequest
 import com.example.lizarun.data.storage.network.LizaRunApiClient
@@ -17,8 +17,8 @@ class CompetitionRemoteDataSource(context: Context) {
         apiService.getAllCompetitions()
     }
 
-    fun getByFilters(getCompetitionByFiltersRequest: GetCompetitionByFiltersRequest) = rxJavaSingleCall {
-        apiService.getCompetitionByFilters(requestBody = getCompetitionByFiltersRequest)
+    fun getByFilters(getCompetitionsByFiltersRequest: GetCompetitionsByFiltersRequest) = rxJavaSingleCall {
+        apiService.getCompetitionsByFilters(requestBody = getCompetitionsByFiltersRequest)
     }
 
     fun getById(getCompetitionByIdRequest: GetCompetitionByIdRequest) = rxJavaSingleCall {

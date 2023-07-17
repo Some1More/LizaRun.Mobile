@@ -1,6 +1,6 @@
 package com.example.lizarun.data.storage.model.request
 
-data class GetCompetitionByFiltersRequest(
+data class GetCompetitionsByFiltersRequest(
     val distance: Int,
     val dateTime: String,
     val trackType: Int,
