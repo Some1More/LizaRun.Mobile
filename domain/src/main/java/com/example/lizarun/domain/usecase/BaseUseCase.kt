@@ -11,19 +11,11 @@ abstract class BaseUseCase<T : Any> {
         disposables.clear()
     }
 
-    fun getRxJavaResult(
-        singleResult: Single<T>,
-        onSuccess: (T) -> Unit,
-        onError: (Throwable) -> Unit
-    ) {
-        disposables.addAll(singleResult.subscribe(onSuccess, onError))
+    fun execute(singleCall: Single<T>) {
+        disposables.addAll(singleCall.subscribe())
     }
 
-    fun getRxJavaResult(
-        completableResult: Completable,
-        onComplete: () -> Unit,
-        onError: (Throwable) -> Unit
-    ) {
-        disposables.addAll(completableResult.subscribe(onComplete, onError))
+    fun execute(completableCall: Completable) {
+        disposables.addAll(completableCall.subscribe())
     }
 }

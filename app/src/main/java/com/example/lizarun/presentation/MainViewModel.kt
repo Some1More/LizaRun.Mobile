@@ -1,6 +1,5 @@
 package com.example.lizarun.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,21 +26,21 @@ class MainViewModel @Inject constructor(
         passwordConfirm: String,
         role: Int
     ) {
-        val result = registerUserUseCase(
+        val call = registerUserUseCase(
             RegisterUserParam(email, birthDate, password, passwordConfirm, role)
-        ).flatMap {
+        ).flatMap { authData ->
             getUserByIdUseCase(
-                GetUserByIdParam(id = it.userId)
-            )
-        }
-        getUserByIdUseCase.getRxJavaResult(
-            result,
-            onSuccess = {
-                _user.postValue(it)
-            },
-            onError = {
-                Log.d("info", "${it.message}")
+                GetUserByIdParam(id = authData.userId)
+            ).doOnSubscribe {
+
+            }.doOnSuccess {
+                _user.value = it
+            }.doOnError {
+
+            }.doFinally {
+
             }
-        )
+        }
+        getUserByIdUseCase.execute(call)
     }
 }
